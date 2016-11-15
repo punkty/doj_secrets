@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.login_registration', #FIX ME
+    'apps.login',
     'apps.secrets',
     'django.contrib.admin',
     'django.contrib.auth',
