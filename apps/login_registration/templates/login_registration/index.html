@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Registration</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login_reg_db/styles.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        {% if messages %}
+        {% for message in messages %}
+        <p> {{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        <h1>Login</h1>
+        <form action="/login" id="login" method='post'>
+            {% csrf_token %}
+            <div id="labels">
+                <p>Email:</p>
+                <p>Password:</p>
+            </div>
+            <div id="labelforms">
+                <input type="text" name="email">
+                <input type="password" name="password">
+            </div>
+        </form>
+        <button type="submit" form="login">Submit</button>
+        <h1>Registration</h1>
+        <form action="/process" id="register" method='post'>
+            {% csrf_token %}
+            <div id="labels">
+                <p>Email:</p>
+                <p>First Name:</p>
+                <p>Last Name:</p>
+                <!-- <p>Birthdate (mm/dd/yyyy):</p> -->
+                <p>Password:</p>
+                <p>Confirm Password:</p>
+            </div>
+            <div id="labelforms">
+                <input type="text" name="email">
+                <input type="text" name="first_name">
+                <input type="text" name="last_name">
+                <!-- <input type="text" name="birthdate"> -->
+                <input type="password" name="password">
+                <input type="password" name="confirm">
+            </div>
+        </form>
+        <button type="submit" form="register">Submit</button>
+    </div><!-- /#wrapper  -->
+</body>
+</html>
