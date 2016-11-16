@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from models import User, Secret
 from django.contrib import messages
+from django.db.models import Count
 # from models whatever our tables are
   # Create your views here.
 
@@ -42,11 +43,22 @@ def index(request):
         return redirect('secrets:index')
 
     context = {
-        'secrets': Secret.objects.all()[::-1]
+        'secrets': Secret.objects.order_by('-created_at')[:10],
+        'logged_in_user': User.objects.get(id=request.session['user']['user_id']),
     }
 
     return render(request, 'secrets/index.html', context)
 
+def hotsecrets(request):
+    if not session_check(request):
+        return redirect('secrets:index')
+
+    context = {
+        'secrets': Secret.objects.annotate(num_HOT=Count('likes')).order_by('-num_HOT'),
+        'logged_in_user': User.objects.get(id=request.session['user']['user_id']),
+    }
+
+    return render(request, 'secrets/hotsecrets.html', context)
 def logout(request):
     request.session.clear()
 

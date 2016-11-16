@@ -22,7 +22,7 @@ class SecretManager(models.Manager):
         user = User.objects.get(id=request.session['user']['user_id'])
         secret = Secret.objects.get(id=id)
         secret.likes.add(user)
-        
+
 class Secret(models.Model):
     content = models.CharField(max_length=325)
     created_at = models.DateTimeField(auto_now_add = True)
@@ -30,4 +30,3 @@ class Secret(models.Model):
     secret_creator = models.ForeignKey(User, related_name = 'user_secret')
     likes = models.ManyToManyField(User, related_name = 'user_likes')
     objects = SecretManager()
-
